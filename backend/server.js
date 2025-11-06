@@ -8,13 +8,26 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+const allowedDomain = process.env.CLIENT_URL?.replace(/^https?:\/\//, "");
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (
+      origin.includes(allowedDomain) ||
+      origin === "http://localhost:5173"
+    ) return callback(null, true);
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.get("/api/weather", async (req, res) => {
   try {
     const city = req.query.city || "Hyderabad";
-    const apiKey = process.env.OPENWEATHER_API_KEY;
+    const apiKey = process.env.OPENWEATHER_API_KEY; 
+;
     const weatherRes = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
     );
@@ -59,6 +72,10 @@ const quotes = [
 app.get("/api/quote", (req, res) => {
   const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
   res.json({ quote: randomQuote });
+});
+
+app.get("/", (req, res) => {
+  res.send("Hello from the backend!");
 });
 
 app.listen(PORT, () => {
