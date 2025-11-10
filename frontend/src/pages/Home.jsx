@@ -4,7 +4,7 @@ import { WeatherModule, CurrencyConverter, QuoteGenerator } from "../components"
 
 const Home = () => {
   return (
-    <div className="flex-col">
+    <div className="flex-col bg-red-200">
       <h2 className="text-3xl text-center md:text-5xl font-bold text-slate-800">
         Home Page
       </h2>
