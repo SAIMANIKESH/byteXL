@@ -9,7 +9,7 @@ export default function App() {
     <>
       <Navbar />
 
-      <main className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center">
+      <main className="min-h-screen pt-20 bg-red-200 bg-gradient-to-br from-blue-50 via-white to-blue-100 flex items-center justify-center">
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
